@@ -3,8 +3,9 @@ import time
 
 while True:	
 	try:
-		res = requests.get("http://localhost:5000/")
-		print(res.__dict__)
+		for host in "18.222.52.182","13.59.211.35","18.188.5.1":
+			res = requests.get("http://"+host+":5000/")
+			print(res.__dict__)
 	except Exception as e:
 		print(e)
 
