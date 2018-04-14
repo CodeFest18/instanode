@@ -14,4 +14,4 @@ def gui():
 	return flask.render_template('gui.html')
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=True, host="0.0.0.0")
