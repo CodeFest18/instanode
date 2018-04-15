@@ -32,9 +32,12 @@ def create_genesis_block():
 
 def next_block(last_block, json_transaction):
   this_index = last_block.index + 1
+  print("INDEX FOR NEXT BLOCK: " + this_index)
   this_timestamp = date.datetime.now()
   this_data = json_transaction
+  print("JSON FOR NEXT BLOCK: " + json_transaction)
   this_hash = last_block.hash
+  print("LAST BLOCK'S HASH: " + last_block.hash)
   return Block(this_index, this_data, this_hash)
 
 app = flask.Flask(__name__)
