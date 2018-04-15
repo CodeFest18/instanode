@@ -67,7 +67,7 @@ def leader_determine():
     sha.update((str(BLOCKCHAIN[-1].hash_block())+str(remote_pub_key)).encode('utf-8'))
     sortition_hash = sha.hexdigest()
     if lowest_sortition_hash == None or\
-      int(sortition_hash) < lowest_sortition_hash:
+      sortition_hash < lowest_sortition_hash:
       lowest_sortition_hash = sortition_hash
     
     # poll your own key
