@@ -99,6 +99,7 @@ def get_hash():
 def replicate():
   print("REPLICATE:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+  return "SUCCESS"
 
 @app.route('/push-block', methods=['POST'])
 def home():
