@@ -95,10 +95,17 @@ def leader_hash():
 def get_hash():
 	return str(BLOCKCHAIN[-1].hash_block())
 
+@app.route('/replicate-block', methods=['POST'])
+for host in hosts:  
+	print("REPLICATE:", flask.request.json)
+	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+
 @app.route('/push-block', methods=['POST'])
 def home():
-	print(flask.request.json)
+	print("PUSH:", flask.request.json)
 	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+  for host in hosts:
+    requests.post("http://"+host+":5000/replicate-block", json=flask.request.json)
 	return "SUCCESS"
 
 @app.route('/')
