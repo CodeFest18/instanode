@@ -5,6 +5,7 @@ import hashlib as hasher
 import datetime as date
 import subprocess
 import debugrn
+import send_sms
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
@@ -81,6 +82,7 @@ def leader_determine():
    
   if sortition_hash == lowest_sortition_hash:
     print("YOU ARE THE LEADER")
+    send_sms()
     return '\n'.join(open('static/leader.html').readlines())
   else:
     print("YOU ARE NOT THE LEADER")
