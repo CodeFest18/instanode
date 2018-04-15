@@ -1,6 +1,3 @@
-import flask
-import time
-import requests
 import hashlib as hasher
 import datetime as date
 
@@ -14,10 +11,10 @@ class Block:
   
   def hash_block(self):
     sha = hasher.sha256()
-    sha.update((str(self.index) + 
+    sha.update(str(self.index) + 
                str(self.timestamp) + 
                str(self.data) + 
-               str(self.previous_hash)).encode('utf-8'))
+               str(self.previous_hash))
     return sha.hexdigest()
 
 
@@ -27,26 +24,25 @@ def create_genesis_block():
   return Block(0, date.datetime.now(), "Genesis Block", "0")
 
 
-def next_block(last_block, json_transaction):
+def next_block(last_block):
   this_index = last_block.index + 1
   this_timestamp = date.datetime.now()
-  this_data = json_transaction
+  this_data = "Hey! I'm block " + str(this_index)
   this_hash = last_block.hash
   return Block(this_index, this_timestamp, this_data, this_hash)
 
-app = flask.Flask(__name__)
+blockchain = [create_genesis_block()]
+previous_block = blockchain[0]
 
-BLOCKCHAIN = [create_genesis_block()]
+# How many blocks should we add to the chain
+# after the genesis block
+num_of_blocks_to_add = 10
 
-@app.route('/', methods=['POST'])
-def home():
-	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
-	print(list(map(lambda x:x.__dict__, BLOCKCHAIN)))	
-	return flask.render_template('home.html')
-
-@app.route('/gui')
-def gui():
-	return flask.render_template('gui.html')
-
-if __name__ == '__main__':
-	app.run(debug=True, host="0.0.0.0")
+# Add blocks to the chain
+for i in range(0, num_of_blocks_to_add):
+  block_to_add = next_block(previous_block)
+  blockchain.append(block_to_add)
+  previous_block = block_to_add
+  # Tell everyone about it!
+  print("Block #{} has been added to the blockchain!".format(block_to_add.index))
+  print("Hash: {}\n".format(block_to_add.hash))
