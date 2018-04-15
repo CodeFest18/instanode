@@ -91,9 +91,9 @@ def home():
 	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
 	return "SUCCESS"
 
-@app.route('/gui')
-def gui():
-	return flask.render_template('gui.html')
+@app.route('/')
+def index():
+	return flask.render_template('../FrontEnd/index.html')
 
 if __name__ == '__main__':
 	app.run(debug=True, host="0.0.0.0")
