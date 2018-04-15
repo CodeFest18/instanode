@@ -9,6 +9,6 @@ def printLog(*args, **kwargs):
     #get date as a string
     date = datetime.now()
     host = socket.gethostname()
-    file.write(str(date) + " " + host " " + msg + "\n")
+    file.write(str(date) + " " + host + " " + msg + "\n")
     file.close()
     
