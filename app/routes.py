@@ -34,7 +34,7 @@ def next_block(last_block, json_transaction):
   this_timestamp = date.datetime.now()
   this_data = json_transaction
   this_hash = last_block.hash
-  return Block(this_index, this_timestamp, this_data, this_hash)
+  return Block(this_index, this_data, this_hash)
 
 app = flask.Flask(__name__)
 
@@ -88,6 +88,7 @@ def get_hash():
 
 @app.route('/push-block', methods=['POST'])
 def home():
+	print(flask.request.json)
 	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
 	return "SUCCESS"
 

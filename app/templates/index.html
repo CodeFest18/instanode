@@ -4,7 +4,18 @@
   <head>
     <link rel="stylesheet" href="static/CSS/main.css">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-    <nav>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+    <script src="static/JS/main.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BlocKontribute</title>
+  </head>
+  <body onload="getContent()">
+     <nav>
       <div class="nav-wrapper">
         <a href="index" class="brand-logo">BlocKontribute</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -12,18 +23,7 @@
         </ul>
       </div>
     </nav>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>BlocKontribute</title>
-  </head>
-  <body onload="getContent()">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="static/JS/main.js"></script>
     <!-- to be filled in with content from server -->
     <div id="mainSection">
       <p>{{ message }}</p>
