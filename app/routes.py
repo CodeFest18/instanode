@@ -53,6 +53,7 @@ PUB_KEY_STR = PUB_KEY.public_bytes(
 with subprocess.Popen(["hostname", "-i"], stdout=subprocess.PIPE) as hostname_proc:
       ip_addr = hostname_proc.stdout.read().strip()
 hosts = [host for host in ["172.31.27.255","172.31.21.220","172.31.24.15"] if host != ip_addr]
+print(hosts)
 
 @app.route('/determine-if-leader')
 def leader_determine():
