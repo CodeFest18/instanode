@@ -12,8 +12,7 @@ while True:
 	mode_hash = 0
 	try:
 		# BEGIN CONSENSUS
-		#for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
-		for host in ["localhost"]:
+		for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
 			print("POLLING: " + host)
 			res = requests.get("http://"+host+":5000/blockchain-hash")
 			block_hash = res._content
@@ -35,7 +34,6 @@ while True:
 			print("NUMBER OF NODES:", number_of_nodes)
 			print("LARGEST HASH COUNT: ", largest_hash_count)
 
-		res = requests.get("http://localhost:5000/determine-if-leader", headers={'Content-Type':'text/plain'})
 		# END CONSENSUS
 
 	except Exception as e:

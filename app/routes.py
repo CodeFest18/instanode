@@ -71,10 +71,10 @@ def leader_determine():
    
     if sortition_hash == lowest_sortition_hash:
       print("YOU ARE THE LEADER")
-      return "YES"
+      return '\n'.join(open('static/leader.html').readlines())
     else:
       print("YOU ARE NOT THE LEADER")
-      return "NO"
+      return '\n'.join(open('static/transfer.html').readlines())
     
 		# END LEADER SORTITION
 

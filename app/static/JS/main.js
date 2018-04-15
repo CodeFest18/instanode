@@ -28,3 +28,14 @@ function showSlides(n) {
   dots[slideIndex-1].className += " active";
   captionText.innerHTML = dots[slideIndex-1].alt;
 }
+
+function getContent(){
+  $.ajax({
+    url: "http://" + window.location.hostname + ":5000/determine-if-leader",
+    method: "POST",
+    dataType: "html",
+    success: function(data, textStatus, jqXHR){
+      mainSection.message = data;
+    }
+  });
+}
