@@ -72,6 +72,7 @@ def leader_determine():
   # poll your own key
   sha = hasher.sha256()
   sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
+
   sortition_hash = sha.hexdigest()
   if sortition_hash < lowest_sortition_hash:
     lowest_sortition_hash = sortition_hash
@@ -113,6 +114,11 @@ def home():
 @app.route('/index')
 def index():
   return flask.render_template('index.html')
+
+@app.route('/thankYou')
+def thankYou():
+  return '\n'.join(open('static/thank_you.html').readlines())
+
 
 if __name__ == '__main__':
   app.run(debug=True, host="0.0.0.0")
