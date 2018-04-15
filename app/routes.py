@@ -72,7 +72,7 @@ def leader_determine():
     sha = hasher.sha256()
     sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
     sortition_hash = sha.hexdigest()
-    if sortition_hash < lowest_sortion_hash:
+    if sortition_hash < lowest_sortition_hash:
       lowest_sortition_hash = sortition_hash
     print("SORTITION HASH: ", sortition_hash)
     print("LOWEST SORTITION HASH: ", lowest_sortition_hash)
