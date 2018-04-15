@@ -4,10 +4,10 @@ import requests
 import hashlib as hasher
 import datetime as date
 import subprocess
+import debugrn
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
-
 
 class Block:
   def __init__(self, index, data, previous_hash):
@@ -65,8 +65,6 @@ def leader_determine():
     if lowest_sortition_hash == None or\
       sortition_hash < lowest_sortition_hash:
       lowest_sortition_hash = sortition_hash
-    print("SORTITION HASH: ", sortition_hash)
-    print("LOWEST SORTITION HASH: ", lowest_sortition_hash)
     
     # poll your own key
     sha = hasher.sha256()
@@ -74,8 +72,6 @@ def leader_determine():
     sortition_hash = sha.hexdigest()
     if sortition_hash < lowest_sortition_hash:
       lowest_sortition_hash = sortition_hash
-    print("SORTITION HASH: ", sortition_hash)
-    print("LOWEST SORTITION HASH: ", lowest_sortition_hash)
    
   if sortition_hash == lowest_sortition_hash:
     print("YOU ARE THE LEADER")
@@ -88,7 +84,6 @@ def leader_determine():
 
 @app.route('/pub-key')
 def leader_hash():
-  print(str(PUB_KEY_STR))
   return str(PUB_KEY_STR)
 
 @app.route('/blockchain-hash')
@@ -99,12 +94,14 @@ def get_hash():
 def replicate():
   print("REPLICATE:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+  debugrn.printLog(BLOCKCHAIN)
   return "SUCCESS"
 
 @app.route('/push-block', methods=['POST'])
 def home():
   print("PUSH:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+  debugrn.printLog(BLOCKCHAIN)
   for host in hosts:
     requests.post("http://"+host+":5000/replicate-block", json=flask.request.json)
   return "SUCCESS"
