@@ -1,33 +1,32 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="static/CSS/main.css">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-    <nav>
-      <div class="nav-wrapper">
-        <a href="index.html" class="brand-logo">BlocKontribute</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="about-us/about-us.html">About us</a></li>
-        </ul>
-      </div>
-    </nav>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+    <script src="static/JS/main.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <script src="JS/main.js"></script>
-    <script src="JS/views.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>BlocKontribute</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
-  <body>
+  <body onload="getContent()">
+     <nav>
+      <div class="nav-wrapper">
+        <a href="index" class="brand-logo">BlocKontribute</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="static/about-us/about-us.html">About us</a></li>
+        </ul>
+      </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- to be filled in with content from server -->
     <div id="mainSection">
       <p>{{ message }}</p>
     </div>
+    <script src="static/JS/views.js"></script>
   </body>
 </html>

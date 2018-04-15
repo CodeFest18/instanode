@@ -1,5 +1,23 @@
+
 var slideIndex = 1;
 showSlides(slideIndex);
+
+function commit(){
+  var our_data = {
+      to: $( "#caption" ).text(),
+      amount: 10
+  };
+  console.log(our_data);
+  $.ajax({
+    url: "http://" + window.location.hostname + ":5000/push-block",
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(our_data),
+    success: function(data, textStatus, jqXHR){
+      getContent();
+    }
+  });
+}
 
 // Next/previous controls
 function plusSlides(n) {
