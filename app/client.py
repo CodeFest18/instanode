@@ -10,7 +10,7 @@ while True:
 	number_of_nodes = 0
 	mode_hash = 0
 	try:
-		for host in ["172.31.27.255","172.21.31.220","172.31.24.15"]:
+		for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
 			print("POLLING: " + host)
 			# Get the latest hash from node
 			res = requests.get("http://"+host+":5000/hash-block")
