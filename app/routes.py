@@ -84,7 +84,7 @@ def leader_determine():
     print("YOU ARE NOT THE LEADER")
     return '\n'.join(open('static/transfer.html').readlines())
     
-		# END LEADER SORTITION
+    # END LEADER SORTITION
 
 @app.route('/pub-key')
 def leader_hash():
@@ -93,25 +93,25 @@ def leader_hash():
 
 @app.route('/blockchain-hash')
 def get_hash():
-	return str(BLOCKCHAIN[-1].hash_block())
+  return str(BLOCKCHAIN[-1].hash_block())
 
 @app.route('/replicate-block', methods=['POST'])
-for host in hosts:  
-	print("REPLICATE:", flask.request.json)
-	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+def replicate():
+  print("REPLICATE:", flask.request.json)
+  BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
 
 @app.route('/push-block', methods=['POST'])
 def home():
-	print("PUSH:", flask.request.json)
-	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
+  print("PUSH:", flask.request.json)
+  BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
   for host in hosts:
     requests.post("http://"+host+":5000/replicate-block", json=flask.request.json)
-	return "SUCCESS"
+  return "SUCCESS"
 
 @app.route('/')
 @app.route('/index')
 def index():
-	return flask.render_template('index.html')
+  return flask.render_template('index.html')
 
 if __name__ == '__main__':
-	app.run(debug=True, host="0.0.0.0")
+  app.run(debug=True, host="0.0.0.0")
