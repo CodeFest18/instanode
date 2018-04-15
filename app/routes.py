@@ -43,12 +43,8 @@ BLOCKCHAIN = [create_genesis_block()]
 
 # BEGIN KEY GENERATION
 # NOT CRYTOGRAPHICALLY SECURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-PRIV_KEY = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
-PUB_KEY = PRIV_KEY.public_key()
-PUB_KEY_STR = PUB_KEY.public_bytes(
-  encoding=serialization.Encoding.PEM,
-  format=serialization.PublicFormat.SubjectPublicKeyInfo
-)
+with open("/home/ryan/.ssh/id_rsa.pub") as key:
+  PUB_KEY_STR = key.read()
 # END KEY GENERATION
 with subprocess.Popen(["hostname", "-i"], stdout=subprocess.PIPE) as hostname_proc:
       ip_addr = hostname_proc.stdout.read().strip().decode('utf-8')
