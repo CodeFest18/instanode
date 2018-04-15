@@ -3,6 +3,10 @@ import time
 import requests
 import hashlib as hasher
 import datetime as date
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.hazmat.primitives import serialization
+
 
 class Block:
   def __init__(self, index, data, previous_hash):
@@ -36,7 +40,49 @@ app = flask.Flask(__name__)
 
 BLOCKCHAIN = [create_genesis_block()]
 
-@app.route('/hash-block')
+# BEGIN KEY GENERATION
+# NOT CRYTOGRAPHICALLY SECURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+PRIV_KEY = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
+PUB_KEY = PRIV_KEY.public_key()
+PUB_KEY_STR = PUB_KEY.public_bytes(
+    encoding=serialization.Encoding.PEM,
+    format=serialization.PublicFormat.SubjectPublicKeyInfo
+)
+# END KEY GENERATION
+
+@app.route('/determine-if-leader')
+def leader_determine():
+  # BEGIN LEADER SORTITION
+  lowest_sortition_hash = None
+  #for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
+  for host in ["localhost"]:
+    # THIS ASSUMES A PERFECT CONSENSUS OF THE BLOCK HASH
+    sha = hasher.sha256()
+    sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
+    sortition_hash = sha.hexdigest()
+    if lowest_sortition_hash == None or\
+      int(sortition_hash) < lowest_sortition_hash:
+      lowest_sortition_hash = sortition_hash
+    
+    # poll your own key
+    sha = hasher.sha256()
+    sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
+    sortition_hash = sha.hexdigest()
+   
+    if sortition_hash == lowest_sortition_hash:
+      print("YOU ARE THE LEADER")
+      return "YES"
+    else:
+      print("YOU ARE NOT THE LEADER")
+      return "NO"
+    
+		# END LEADER SORTITION
+
+@app.route('/pub-key')
+def leader_hash():
+  return str(PUB_KEY_STR)
+
+@app.route('/blockchain-hash')
 def get_hash():
 	return str(BLOCKCHAIN[-1].hash_block())
 
