@@ -54,11 +54,12 @@ PUB_KEY_STR = PUB_KEY.public_bytes(
 def leader_determine():
   # BEGIN LEADER SORTITION
   lowest_sortition_hash = None
-  #for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
-  for host in ["localhost"]:
+  for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
     # THIS ASSUMES A PERFECT CONSENSUS OF THE BLOCK HASH
+    res = requests.get('http://'+host+':5000/pub-key', headers={"Content-Type":"text/plaintext"})
+    remote_pub_key = res._content
     sha = hasher.sha256()
-    sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
+    sha.update((str(BLOCKCHAIN[-1].hash_block())+str(remote_pub_key)).encode('utf-8'))
     sortition_hash = sha.hexdigest()
     if lowest_sortition_hash == None or\
       int(sortition_hash) < lowest_sortition_hash:
