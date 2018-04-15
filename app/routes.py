@@ -58,6 +58,7 @@ def leader_determine():
     # THIS ASSUMES A PERFECT CONSENSUS OF THE BLOCK HASH
     res = requests.get('http://'+host+':5000/pub-key', headers={"Content-Type":"text/plaintext"})
     remote_pub_key = res._content
+    print("GOT PUB KEY FROM: ", host)
     sha = hasher.sha256()
     sha.update((str(BLOCKCHAIN[-1].hash_block())+str(remote_pub_key)).encode('utf-8'))
     sortition_hash = sha.hexdigest()
