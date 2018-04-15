@@ -46,8 +46,9 @@ def home():
 	return "SUCCESS"
 
 @app.route('/')
+@app.route('/index')
 def index():
-	return flask.render_template('../FrontEnd/index.html')
+	return flask.render_template('index.html')
 
 if __name__ == '__main__':
 	app.run(debug=True, host="0.0.0.0")
