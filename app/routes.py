@@ -98,14 +98,14 @@ def get_hash():
 def replicate():
   print("REPLICATE:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
-  debugrn.printLog(list(map(lambda x: x.__dict__, BLOCKCHAIN)))
+  debugrn.printLog("REPLICATE", list(map(lambda x: x.__dict__, BLOCKCHAIN)))
   return "SUCCESS"
 
 @app.route('/push-block', methods=['POST'])
 def home():
   print("PUSH:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
-  debugrn.printLog(list(map(lambda x: x.__dict__, BLOCKCHAIN)))
+  debugrn.printLog("PUSH_BLOCK", list(map(lambda x: x.__dict__, BLOCKCHAIN)))
   for host in hosts:
     requests.post("http://"+host+":5000/replicate-block", json=flask.request.json)
   return "SUCCESS"
