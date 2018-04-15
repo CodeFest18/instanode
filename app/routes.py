@@ -60,10 +60,8 @@ def leader_determine():
   lowest_sortition_hash = None
   for host in hosts:
     # THIS ASSUMES A PERFECT CONSENSUS OF THE BLOCK HASH
-    print("GETTING PUB KEY FROM: ", host)
     res = requests.get('http://'+host+':5000/pub-key', headers={"Accept":"text/plaintext"})
     remote_pub_key = res._content
-    print("GOT PUB KEY FROM: ", host)
     sha = hasher.sha256()
     sha.update((str(BLOCKCHAIN[-1].hash_block())+str(remote_pub_key)).encode('utf-8'))
     sortition_hash = sha.hexdigest()
@@ -87,6 +85,7 @@ def leader_determine():
 
 @app.route('/pub-key')
 def leader_hash():
+  print(str(PUB_KEY_STR))
   return str(PUB_KEY_STR)
 
 @app.route('/blockchain-hash')
