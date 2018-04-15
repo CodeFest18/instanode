@@ -38,11 +38,14 @@ app = flask.Flask(__name__)
 
 BLOCKCHAIN = [create_genesis_block()]
 
-@app.route('/', methods=['POST'])
+@app.route('/hash-block')
+def get_hash():
+	return str(BLOCKCHAIN[-1].hash_block())
+
+@app.route('/push-block', methods=['POST'])
 def home():
 	BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
-	print(list(map(lambda x:x.__dict__, BLOCKCHAIN)))	
-	return flask.render_template('home.html')
+	return "SUCCESS"
 
 @app.route('/gui')
 def gui():
