@@ -33,7 +33,6 @@ def create_genesis_block():
 def next_block(last_block, json_transaction):
   this_index = last_block.index + 1
   print("INDEX FOR NEXT BLOCK: " + this_index)
-  this_timestamp = date.datetime.now()
   this_data = json_transaction
   print("JSON FOR NEXT BLOCK: " + json_transaction)
   this_hash = last_block.hash
@@ -51,7 +50,8 @@ with open("/home/ryan/.ssh/id_rsa.pub") as key:
 # END KEY GENERATION
 with subprocess.Popen(["hostname", "-i"], stdout=subprocess.PIPE) as hostname_proc:
       ip_addr = hostname_proc.stdout.read().strip().decode('utf-8')
-hosts = [host for host in ["172.31.27.255","172.31.21.220","172.31.24.15"] if host != ip_addr]
+#hosts = [host for host in ["172.31.27.255","172.31.21.220","172.31.24.15"] if host != ip_addr]
+hosts = [host for host in ["172.31.21.220","172.31.24.15"] if host != ip_addr]
 print(hosts)
 
 @app.route('/determine-if-leader')
