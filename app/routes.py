@@ -56,6 +56,7 @@ def leader_determine():
   lowest_sortition_hash = None
   for host in ["172.31.27.255","172.31.21.220","172.31.24.15"]:
     # THIS ASSUMES A PERFECT CONSENSUS OF THE BLOCK HASH
+    print("GETTING PUB KEY FROM: ", host)
     res = requests.get('http://'+host+':5000/pub-key', headers={"Accept":"text/plaintext"})
     remote_pub_key = res._content
     print("GOT PUB KEY FROM: ", host)
