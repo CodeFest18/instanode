@@ -75,12 +75,12 @@ def leader_determine():
     sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
     sortition_hash = sha.hexdigest()
    
-    if sortition_hash == lowest_sortition_hash:
-      print("YOU ARE THE LEADER")
-      return '\n'.join(open('static/leader.html').readlines())
-    else:
-      print("YOU ARE NOT THE LEADER")
-      return '\n'.join(open('static/transfer.html').readlines())
+  if sortition_hash == lowest_sortition_hash:
+    print("YOU ARE THE LEADER")
+    return '\n'.join(open('static/leader.html').readlines())
+  else:
+    print("YOU ARE NOT THE LEADER")
+    return '\n'.join(open('static/transfer.html').readlines())
     
 		# END LEADER SORTITION
 
