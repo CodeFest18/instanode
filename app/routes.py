@@ -32,8 +32,12 @@ def create_genesis_block():
 
 def next_block(last_block, json_transaction):
   this_index = last_block.index + 1
+<<<<<<< HEAD
   print("INDEX FOR NEXT BLOCK: " + str(this_index))
   this_timestamp = date.datetime.now()
+=======
+  print("INDEX FOR NEXT BLOCK: " + this_index)
+>>>>>>> a304b3570287e986d84895c22f150b2a818f4aec
   this_data = json_transaction
   print("JSON FOR NEXT BLOCK: " + str(json_transaction))
   this_hash = last_block.hash
@@ -51,7 +55,8 @@ with open("/home/ryan/.ssh/id_rsa.pub") as key:
 # END KEY GENERATION
 with subprocess.Popen(["hostname", "-i"], stdout=subprocess.PIPE) as hostname_proc:
       ip_addr = hostname_proc.stdout.read().strip().decode('utf-8')
-hosts = [host for host in ["172.31.27.255","172.31.21.220","172.31.24.15"] if host != ip_addr]
+#hosts = [host for host in ["172.31.27.255","172.31.21.220","172.31.24.15"] if host != ip_addr]
+hosts = [host for host in ["172.31.21.220","172.31.24.15"] if host != ip_addr]
 print(hosts)
 
 @app.route('/determine-if-leader')
@@ -72,6 +77,7 @@ def leader_determine():
   # poll your own key
   sha = hasher.sha256()
   sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
+
   sortition_hash = sha.hexdigest()
   if sortition_hash < lowest_sortition_hash:
     lowest_sortition_hash = sortition_hash
@@ -99,14 +105,14 @@ def get_hash():
 def replicate():
   print("REPLICATE:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
-  debugrn.printLog(list(map(lambda x: x.__dict__, BLOCKCHAIN)))
+  debugrn.printLog("REPLICATE", list(map(lambda x: x.__dict__, BLOCKCHAIN)))
   return "SUCCESS"
 
 @app.route('/push-block', methods=['POST'])
 def home():
   print("PUSH:", flask.request.json)
   BLOCKCHAIN.append(next_block(BLOCKCHAIN[-1], flask.request.json))
-  debugrn.printLog(list(map(lambda x: x.__dict__, BLOCKCHAIN)))
+  debugrn.printLog("PUSH_BLOCK", list(map(lambda x: x.__dict__, BLOCKCHAIN)))
   for host in hosts:
     requests.post("http://"+host+":5000/replicate-block", json=flask.request.json)
   return "SUCCESS"
@@ -115,6 +121,11 @@ def home():
 @app.route('/index')
 def index():
   return flask.render_template('index.html')
+
+@app.route('/thankYou')
+def thankYou():
+  return '\n'.join(open('static/thank_you.html').readlines())
+
 
 if __name__ == '__main__':
   app.run(debug=True, host="0.0.0.0")
