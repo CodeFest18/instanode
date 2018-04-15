@@ -32,12 +32,12 @@ def create_genesis_block():
 
 def next_block(last_block, json_transaction):
   this_index = last_block.index + 1
-  print("INDEX FOR NEXT BLOCK: " + this_index)
+  print("INDEX FOR NEXT BLOCK: " + str(this_index))
   this_timestamp = date.datetime.now()
   this_data = json_transaction
-  print("JSON FOR NEXT BLOCK: " + json_transaction)
+  print("JSON FOR NEXT BLOCK: " + str(json_transaction))
   this_hash = last_block.hash
-  print("LAST BLOCK'S HASH: " + last_block.hash)
+  print("LAST BLOCK'S HASH: " + str(last_block.hash))
   return Block(this_index, this_data, this_hash)
 
 app = flask.Flask(__name__)
@@ -75,6 +75,8 @@ def leader_determine():
   sortition_hash = sha.hexdigest()
   if sortition_hash < lowest_sortition_hash:
     lowest_sortition_hash = sortition_hash
+  print("LOWEST HASH: ",str(lowest_sortition_hash))    
+  print("MY hASH: ", str(sortition_hash)) 
    
   if sortition_hash == lowest_sortition_hash:
     print("YOU ARE THE LEADER")
