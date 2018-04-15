@@ -66,12 +66,12 @@ def leader_determine():
       sortition_hash < lowest_sortition_hash:
       lowest_sortition_hash = sortition_hash
     
-    # poll your own key
-    sha = hasher.sha256()
-    sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
-    sortition_hash = sha.hexdigest()
-    if sortition_hash < lowest_sortition_hash:
-      lowest_sortition_hash = sortition_hash
+  # poll your own key
+  sha = hasher.sha256()
+  sha.update((str(BLOCKCHAIN[-1].hash_block())+str(PUB_KEY_STR)).encode('utf-8'))
+  sortition_hash = sha.hexdigest()
+  if sortition_hash < lowest_sortition_hash:
+    lowest_sortition_hash = sortition_hash
    
   if sortition_hash == lowest_sortition_hash:
     print("YOU ARE THE LEADER")
